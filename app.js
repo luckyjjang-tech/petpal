@@ -322,7 +322,7 @@
     fx('bowl');
     say(pick(isCat() ? ['냠냠', '맛있다 냐옹', '쩝쩝'] : ['냠냠!', '냠냠냠!', '맛있어!', '또 먹을래!']));
     note(subj() + ' 밥그릇으로 달려가 고개를 숙이고 먹어요.');
-    startAction({ pose: 'sad', bowl: 'food', ms: 6200 });
+    startAction({ pose: 'sad', bowl: 'food', ms: 9000 });
     react(1800);
     render(); save();
   }
@@ -342,7 +342,7 @@
     fx('drop', 2);
     say(pick(isCat() ? ['물 좋아', '쩝쩝'] : ['물이 좋아!', '쩝쩝', '시원해!']));
     note('물을 시원하게 마셨어요.');
-    startAction({ pose: 'sad', bowl: 'water', ms: 5400 });
+    startAction({ pose: 'sad', bowl: 'water', ms: 8000 });
     react(1400);
     render(); save();
   }
@@ -361,13 +361,13 @@
       note(hungry
         ? subj() + ' 배가 고픈지 금방 돌아와 앉았어요.'
         : '장난감을 쫓아 방 안을 뛰어다녀요.');
-      startAction({ pose: 'walk', walk: true, bowl: 'toy', ms: 6400 });
+      startAction({ pose: 'walk', walk: true, bowl: 'toy', ms: 8000 });
     } else {
       say(pick(['왈왈!', '멍멍!', '나가자!']));
       note(hungry
         ? subj() + ' 배가 고픈지 금방 돌아왔어요.'
         : subj() + ' 신나서 앞장서서 걸었어요.');
-      startAction({ pose: 'walk', walk: true, ms: 6400 });
+      startAction({ pose: 'walk', walk: true, ms: 8000 });
     }
     react(2000);
     render(); save();
@@ -383,7 +383,7 @@
     note(isCat()
       ? subj() + ' 눈을 감고 머리를 손에 비벼요.'
       : subj() + ' 눈을 감고 머리를 손에 기대요.');
-    startAction({ pose: 'sit', ms: 5800 });
+    startAction({ pose: 'sit', ms: 8000 });
     react(2400);
     render(); save();
   }
@@ -407,7 +407,7 @@
       note(cat
         ? '처음으로 자기 이름을 알아들은 것 같아요. 꼬리를 세우고 다가왔어요.'
         : '처음으로 자기 이름을 알아들은 것 같아요. 꼬리를 세차게 흔들며 달려왔어요.', 9000);
-      startAction({ pose: 'stand', ms: 3200, jump: true });
+      startAction({ pose: 'stand', ms: 4200, jump: true });
       react(3200);
     } else {
       s.mood = clamp(s.mood + 2);
