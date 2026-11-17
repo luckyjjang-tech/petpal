@@ -1,4 +1,4 @@
-/* 펫팔 v0.2 — 스타일
+/* 펫팔 v0.3 — 스타일
    사진 배경 + 3D 캔버스. 바깥 라이브러리 없음(three.min.js는 저장소 안). */
 
 :root {
@@ -118,7 +118,8 @@ body {
   transition: opacity .25s, transform .3s;
 }
 .prop.on { opacity: 1; transform: none; }
-.bowl { left: 36%; bottom: 10.5%; width: 78px; }
+.bowl { left: 40%; bottom: 15%; width: 70px; }
+.toy  { left: 66%; bottom: 15%; width: 48px; }
 .bowl svg { width: 100%; height: auto; display: block; }
 
 .effects { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 4; }
