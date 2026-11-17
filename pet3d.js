@@ -284,9 +284,11 @@
       mesh.position.x = (0.5 - (cur.anchor || 0.5)) * w;
       mesh.position.y = groundY - (cur.dy || 0) * h;
       var sw = Math.min(w * 1.05, w * (0.60 + 0.45 * (h / (maxH || 1))));
-      shadow.scale.set(sw, sw * 0.21, 1);
+      var sy = sw * 0.21;
+      shadow.scale.set(sw, sy, 1);
       shadow.position.x = group.position.x + mesh.position.x * 0.4;
-      shadow.position.y = groundY - 0.004;
+      // 그림자 타원의 아래쪽이 발끝 선에 오게 올린다(가운데를 바닥선에 두면 떠 보인다)
+      shadow.position.y = groundY + sy * 0.42;
       shadow.material.opacity = (jumpT >= 0 ? 0.5 : 1.0) * (1 - 0.35 * uniforms.uThin.value);
     }
 
