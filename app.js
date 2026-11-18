@@ -221,6 +221,7 @@
   var layers = [];
   var activeLayer = 0;
   var currentKey = '';
+  var swapToken = 0;
   var preloaded = {};
 
   function photoUrl(setName, pose) {
@@ -258,13 +259,16 @@
     var key = setName + '|' + pose;
     if (key === currentKey) return;
 
+    var token = ++swapToken;
     var next = layers[1 - activeLayer];
     var prev = layers[activeLayer];
     var url = photoUrl(setName, pose);
 
     function swap() {
-      next.style.setProperty('--fade', (fadeMs || 340) + 'ms');
+      if (token !== swapToken) return;      // 더 새로운 사진 요청이 있으면 이건 버린다
       if (next.getAttribute('src') !== url) next.src = url;
+      next.style.transitionDuration = (fadeMs || 300) + 'ms';
+      prev.style.transitionDuration = Math.min(150, (fadeMs || 300)) + 'ms';
       next.classList.add('on');
       prev.classList.remove('on');
       activeLayer = 1 - activeLayer;

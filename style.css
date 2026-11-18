@@ -174,12 +174,13 @@ body {
 .petShadow {
   position: absolute;
   left: 50%;
-  bottom: calc(15% - 7px);
+  bottom: calc(15% - 9px);
   width: var(--shadowW, 140px);
-  height: 14px;
+  height: 20px;
   translate: -50% 0;
   border-radius: 50%;
-  background: radial-gradient(50% 50% at 50% 50%, rgba(72, 52, 34, .30) 0%, rgba(72, 52, 34, .14) 55%, rgba(72, 52, 34, 0) 78%);
+  background: radial-gradient(50% 50% at 50% 50%, rgba(70, 50, 32, .40) 0%, rgba(70, 50, 32, .20) 48%, rgba(70, 50, 32, 0) 76%);
+  filter: blur(1px);
   z-index: 1;
   transition: width .4s ease, opacity .4s ease;
 }
