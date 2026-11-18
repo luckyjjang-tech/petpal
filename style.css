@@ -194,9 +194,9 @@ body {
   transition: opacity .25s, transform .3s;
 }
 .prop.on { opacity: 1; transform: none; }
-.bowl { left: 27%; bottom: 14%; width: 68px; }
-.bowl:last-of-type { left: auto; right: 26%; }
-.toy  { left: 66%; bottom: 14%; width: 46px; }
+.bowl { left: 22%; bottom: 12%; width: 68px; }
+.bowl:last-of-type { left: auto; right: 21%; }
+.toy  { left: 66%; bottom: 12%; width: 46px; }
 .bowl svg, .toy svg { width: 100%; height: auto; display: block; }
 
 .effects { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 4; }

@@ -825,7 +825,7 @@
           armed = false;
           $('resetBtn').textContent = '다시 분양받기';
           $('resetBtn').classList.remove('armed');
-        }, 6000);
+        }, 12000);
         return;
       }
       clearTimeout(armTimer);
