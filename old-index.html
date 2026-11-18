@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>펫팔 · 평생 함께</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="app" aria-live="polite"></main>
+  <template id="adoption-template">
+    <section class="adoption">
+      <div class="welcome-mark">♥</div><p class="eyebrow">PETPAL</p>
+      <h1>보고 싶은 마음을<br>매일의 돌봄으로.</h1>
+      <p class="intro">아기 때부터 천천히 자라나는 한 아이와<br>평생 함께해요.</p>
+      <button class="primary wide" data-action="start-adoption">분양받기</button>
+    </section>
+  </template>
+  <template id="setup-template">
+    <section class="setup"><button class="back" data-action="back-welcome">‹</button>
+      <p class="eyebrow">첫 만남</p><h1>어떤 아이와<br>함께할까요?</h1>
+      <div class="breed-grid">
+        <button class="breed-card" data-breed="golden"><span class="breed-icon dog-icon">🐶</span><b>골든리트리버</b><small>따뜻하고 다정한 친구</small></button>
+        <button class="breed-card" data-breed="ksh"><span class="breed-icon cat-icon">🐱</span><b>코리안 숏헤어</b><small>조용히 곁을 지키는 친구</small></button>
+      </div>
+    </section>
+  </template>
+  <template id="name-template">
+    <section class="naming"><button class="back" data-action="back-breed">‹</button>
+      <p class="eyebrow">새끼 모습</p><div id="preview-pet" class="preview-pet"></div>
+      <h1><span id="chosen-breed"></span>에게<br>이름을 선물해 주세요.</h1>
+      <label class="name-input"><span>이름 (한글 또는 영문, 2~10자)</span><input id="name-field" maxlength="10" autocomplete="off" placeholder="예: 구름" autofocus></label>
+      <p id="name-help" class="form-help">부를수록 이 이름을 알아갈 거예요.</p>
+      <button class="primary wide" data-action="complete-adoption">함께하기</button>
+    </section>
+  </template>
+  <template id="home-template">
+    <section class="home">
+      <header><div><p class="eyebrow">평생 함께</p><h1 id="pet-title"></h1></div><button class="day-skip" data-action="skip-day" title="시험용">+ 하루</button></header>
+      <div class="home-scene" id="home-scene"><div class="window"></div><div class="plant">🌿</div><div class="speech" id="speech"></div><div id="pet-art" class="pet-art"></div><div id="effect" class="effect"></div></div>
+      <button class="call-button" data-action="call-name">“<span id="call-name"></span>” 부르기</button>
+      <p class="learning" id="learning"></p>
+      <div class="meters" id="meters"></div>
+      <div class="care-actions">
+        <button data-action="feed"><span>🍚</span>밥 주기</button><button data-action="water"><span>💧</span>물 주기</button><button data-action="walk"><span>🦮</span>산책</button><button data-action="play"><span>🧶</span>놀아주기</button><button data-action="pet"><span>🫳</span>쓰다듬기</button>
+      </div>
+    </section>
+  </template>
+  <template id="record-template"><section class="subpage"><h1>우리의 기록</h1><div class="record-hero" id="record-pet"></div><div class="record-list" id="record-list"></div></section></template>
+  <template id="settings-template"><section class="subpage"><h1>설정</h1><div class="setting-box"><h2>이름 바꾸기</h2><p>이름을 바꾸면 새 이름을 다시 알아가는 시간이 필요해요.</p><input id="rename-field" maxlength="10" placeholder="새 이름"><button class="secondary" data-action="rename">이름 바꾸기</button></div><div class="setting-box danger"><h2>처음부터</h2><p>함께한 기록이 모두 사라집니다.</p><button class="danger-btn" data-action="reset">처음부터 시작하기</button></div></section></template>
+  <nav id="tabs" class="tabs" hidden><button data-tab="home">⌂<span>키우기</span></button><button data-tab="record">▣<span>기록</span></button><button data-tab="settings">⚙<span>설정</span></button></nav>
+  <script src="app.js"></script>
+</body></html>

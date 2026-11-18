@@ -1,131 +1,54 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<meta name="color-scheme" content="light" />
-<title>펫팔 Petpal — 동작 시제품 v0.3</title>
-<link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>펫팔 · 평생 함께</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="app">
-
-  <header class="topbar">
-    <div class="brand"><span class="brand-en">Petpal</span><span class="brand-kr">펫팔</span></div>
-    <div class="ver">시제품 v0.3 · 3D</div>
-  </header>
-
-  <main class="stage" id="stage" data-tod="day">
-    <div class="scene" id="scene" aria-hidden="true"></div>
-    <div class="scrim" aria-hidden="true"></div>
-    <canvas id="petCanvas" class="petCanvas"></canvas>
-
-    <div class="props" id="props" aria-hidden="true">
-      <div class="prop bowl" id="bowlFood">
-        <svg viewBox="0 0 64 40"><ellipse cx="32" cy="36" rx="26" ry="4" fill="#000" opacity=".10"/><path d="M6 12h52a3 3 0 0 1 3 3.2C60 26 48 34 32 34S4 26 3 15.2A3 3 0 0 1 6 12Z" fill="#C9834E"/><ellipse cx="32" cy="12" rx="26" ry="5" fill="#8A5A33"/><circle cx="24" cy="11" r="3" fill="#A9703F"/><circle cx="32" cy="10" r="3.2" fill="#A9703F"/><circle cx="40" cy="11" r="2.8" fill="#A9703F"/></svg>
+  <main id="app" aria-live="polite"></main>
+  <template id="adoption-template">
+    <section class="adoption">
+      <div class="welcome-showcase"><div class="hero-light"></div><div id="welcome-pets" class="welcome-pets"></div><span class="paw p1">♥</span><span class="paw p2">✦</span></div><p class="eyebrow">PETPAL · 평생 함께</p>
+      <h1>보고 싶은 마음을<br>매일의 돌봄으로.</h1>
+      <p class="intro">아기 때부터 천천히 자라나는 한 아이와<br>평생 함께해요.</p>
+      <button class="primary wide" data-action="start-adoption">분양받기</button>
+    </section>
+  </template>
+  <template id="setup-template">
+    <section class="setup"><button class="back" data-action="back-welcome">‹</button>
+      <p class="eyebrow">첫 만남</p><h1>어떤 아이와<br>함께할까요?</h1>
+      <div id="breed-playground" class="breed-playground"></div>
+      <div class="breed-grid">
+        <button class="breed-card" data-breed="golden"><span class="breed-icon dog-icon">골든</span><b>골든리트리버</b><small>따뜻하고 다정한 친구</small></button>
+        <button class="breed-card" data-breed="ksh"><span class="breed-icon cat-icon">태비</span><b>코리안 숏헤어</b><small>조용히 곁을 지키는 친구</small></button>
       </div>
-      <div class="prop bowl" id="bowlWater">
-        <svg viewBox="0 0 64 40"><ellipse cx="32" cy="36" rx="26" ry="4" fill="#000" opacity=".10"/><path d="M6 12h52a3 3 0 0 1 3 3.2C60 26 48 34 32 34S4 26 3 15.2A3 3 0 0 1 6 12Z" fill="#9FB9C9"/><ellipse cx="32" cy="12" rx="26" ry="5" fill="#6FA3C4"/><ellipse cx="32" cy="12" rx="20" ry="3.4" fill="#BFE0F2"/></svg>
+    </section>
+  </template>
+  <template id="name-template">
+    <section class="naming"><button class="back" data-action="back-breed">‹</button>
+      <p class="eyebrow">새끼 모습 · 눈을 마주쳤어요</p><div id="preview-pet" class="preview-pet"></div><p class="preview-caption">이름을 들으면 귀를 쫑긋 세울 거예요.</p>
+      <h1><span id="chosen-breed"></span>에게<br>이름을 선물해 주세요.</h1>
+      <label class="name-input"><span>이름 (한글 또는 영문, 2~10자)</span><input id="name-field" maxlength="10" autocomplete="off" placeholder="예: 구름" autofocus></label>
+      <p id="name-help" class="form-help">부를수록 이 이름을 알아갈 거예요.</p>
+      <button class="primary wide" data-action="complete-adoption">함께하기</button>
+    </section>
+  </template>
+  <template id="home-template">
+    <section class="home">
+      <header><div><p class="eyebrow">평생 함께</p><h1 id="pet-title"></h1></div><button class="day-skip" data-action="skip-day" title="시험용">+ 하루</button></header>
+      <div class="home-scene" id="home-scene"><div class="home-detail" id="home-detail"></div><div class="window"></div><div class="plant">🌿</div><div class="speech" id="speech"></div><div id="pet-art" class="pet-art"></div><div id="effect" class="effect"></div></div>
+      <button class="call-button" data-action="call-name">“<span id="call-name"></span>” 부르기</button>
+      <p class="learning" id="learning"></p>
+      <div class="meters" id="meters"></div>
+      <div class="care-actions">
+        <button data-action="feed"><span>🍚</span>밥 주기</button><button data-action="walk"><span>🦮</span>산책하기</button><button data-action="play"><span>🧶</span>놀아주기</button><button data-action="pet"><span>🫳</span>쓰다듬기</button><button data-action="open-settings"><span>⚙</span>설정</button>
       </div>
-      <div class="prop toy" id="toyBall">
-        <svg viewBox="0 0 40 40"><circle cx="20" cy="21" r="13" fill="#EE9AA8"/><path d="M8 15c7 4 17 4 24 0" stroke="#FFF6F0" stroke-width="2.4" fill="none" opacity=".85"/><ellipse cx="20" cy="35" rx="12" ry="2.6" fill="#000" opacity=".10"/></svg>
-      </div>
-    </div>
-
-    <div class="effects" id="effects" aria-hidden="true"></div>
-    <div class="bubble" id="bubble" hidden></div>
-    <p class="narration" id="narration"></p>
-    <p class="dragHint" id="dragHint">좌우로 드래그하면 입체로 돌려 볼 수 있어요</p>
-  </main>
-
-  <section class="panel">
-    <div class="who">
-      <span class="name" id="whoName">이름</span>
-      <span class="meta" id="whoMeta"></span>
-    </div>
-    <div class="bars">
-      <div class="barRow">
-        <span class="bl">배부름</span>
-        <span class="track"><i id="barFull" class="full"></i></span>
-        <span class="bv" id="numFull">0</span>
-      </div>
-      <div class="barRow">
-        <span class="bl">기분</span>
-        <span class="track"><i id="barMood" class="mood"></i></span>
-        <span class="bv" id="numMood">0</span>
-      </div>
-      <div class="barRow">
-        <span class="bl">성장</span>
-        <span class="track"><i id="barGrow" class="grow"></i></span>
-        <span class="bv" id="numGrow">새끼</span>
-      </div>
-    </div>
-    <p class="stall" id="stall" hidden></p>
-  </section>
-
-  <section class="controls">
-    <div class="careRow">
-      <button type="button" class="care" id="btnFeed">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.2 11.6h17.6a1 1 0 0 1 1 1.1C21.3 17.3 17.4 20.6 12 20.6S2.7 17.3 2.2 12.7a1 1 0 0 1 1-1.1Z" fill="currentColor"/><circle cx="9" cy="9.4" r="1.5" fill="#fff" opacity=".85"/><circle cx="13" cy="8.6" r="1.4" fill="#fff" opacity=".85"/><circle cx="16.4" cy="9.6" r="1.3" fill="#fff" opacity=".85"/></svg>
-        <span>밥</span>
-      </button>
-      <button type="button" class="care" id="btnWater">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2c.4 0 .7.2.9.5 1.3 2.1 5.2 8 5.2 10.6a6.1 6.1 0 0 1-12.2 0c0-2.6 3.9-8.5 5.2-10.6.2-.3.5-.5.9-.5Z" fill="currentColor"/></svg>
-        <span>물</span>
-      </button>
-      <button type="button" class="care" id="btnWalk">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="15.8" rx="5.1" ry="4.2" fill="currentColor"/><ellipse cx="6.6" cy="10.6" rx="2.1" ry="2.4" fill="currentColor"/><ellipse cx="10" cy="7.8" rx="2.1" ry="2.5" fill="currentColor"/><ellipse cx="14" cy="7.8" rx="2.1" ry="2.5" fill="currentColor"/><ellipse cx="17.4" cy="10.6" rx="2.1" ry="2.4" fill="currentColor"/></svg>
-        <span id="walkLabel">산책</span>
-      </button>
-      <button type="button" class="care" id="btnPet">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.6c-.4 0-.8-.2-1.1-.4C6.6 17 3.4 13.9 3.4 10.4 3.4 7.5 5.7 5.3 8.4 5.3c1.5 0 2.8.7 3.6 1.8.8-1.1 2.1-1.8 3.6-1.8 2.7 0 5 2.2 5 5.1 0 3.5-3.2 6.6-7.5 9.8-.3.2-.7.4-1.1.4Z" fill="currentColor"/></svg>
-        <span>쓰다듬</span>
-      </button>
-    </div>
-    <button type="button" class="call" id="callBtn">이름을 지어 주세요</button>
-    <p class="hint" id="callHint"></p>
-  </section>
-
-  <footer class="tools">
-    <button type="button" class="tool" id="skipBtn">하루 지나가기</button>
-    <span class="dot">·</span>
-    <button type="button" class="tool" id="growBtn">한 단계 키우기</button>
-    <span class="dot">·</span>
-    <button type="button" class="tool" id="resetBtn">다시 분양받기</button>
-    <span class="calls" id="callCount"></span>
-  </footer>
-
-  <p class="protoNote">시험용 설정 · 실제 설계는 약 1년에 다 자라고, 시제품은 그보다 훨씬 빠르게 자랍니다. 아래 '한 단계 키우기'는 단계별 모습을 보려고 넣은 시험 버튼입니다.</p>
-  <div class="errBar" id="errBar" hidden></div>
-</div>
-
-<!-- 분양 → 이름 -->
-<div class="overlay" id="adopt" hidden>
-  <div class="sheet">
-    <div class="step" id="stepBreed">
-      <h1>어떤 아이를 분양받을까요?</h1>
-      <p class="lead">지금 보이는 건 <b>갓 태어난 새끼</b>의 모습이에요.<br />잘 먹이고 돌보면 새끼 → 어린 개·고양이 → 다 큰 모습으로 자라면서, 그때 품종의 생김새가 드러납니다.</p>
-      <p class="groupTitle">강아지</p>
-      <div class="grid" id="gridDog"></div>
-      <p class="groupTitle">고양이</p>
-      <div class="grid" id="gridCat"></div>
-      <button type="button" class="primary" id="breedOk" disabled>이 아이로 할게요</button>
-      <p class="fine">짱이 만든 동작 시제품 v0.3 · 계정·서버·결제 없이 이 브라우저에만 저장됩니다.</p>
-    </div>
-    <div class="step" id="stepName" hidden>
-      <div class="picked" id="pickedArt"></div>
-      <h1 id="stepNameTitle">이름을 지어 주세요</h1>
-      <p class="lead" id="stepNameLead"></p>
-      <input id="nameInput" type="text" maxlength="8" placeholder="예: 몽이" autocomplete="off" spellcheck="false" />
-      <button type="button" class="primary" id="nameOk" disabled>이 이름으로 부를게요</button>
-      <button type="button" class="ghost" id="backBtn">품종 다시 고르기</button>
-    </div>
-  </div>
-</div>
-
-<script src="lib/three.min.js"></script>
-<script src="assets/manifest.js"></script>
-<script src="pet3d.js"></script>
-<script src="app.js"></script>
-</body>
-</html>
+    </section>
+  </template>
+  <template id="record-template"><section class="subpage"><h1>우리의 기록</h1><div class="record-hero" id="record-pet"></div><div class="record-list" id="record-list"></div></section></template>
+  <template id="settings-template"><section class="subpage"><h1>설정</h1><div class="setting-box"><h2>돌봄 시간표</h2><p>정해진 시간에 돌보면 건강점수가 차곡차곡 쌓여요.</p><div class="schedule"><label>밥 주는 시간 <input id="food-time" type="time"></label><label>산책 시간 <input id="walk-time" type="time"></label><label>산책 유지(분) <input id="walk-min" type="number" min="1" max="180"></label><label>놀이 시간 <input id="play-time" type="time"></label><label>놀이 유지(분) <input id="play-min" type="number" min="1" max="180"></label><label>잠자는 시간 <input id="sleep-time" type="time"></label></div><button class="secondary" data-action="save-schedule">시간표 저장</button></div><div class="setting-box score-box"><h2>누적 건강점수</h2><strong id="score-number"></strong><p id="score-label"></p></div><div class="setting-box"><h2>이름 바꾸기</h2><p>이름을 바꾸면 새 이름을 다시 알아가는 시간이 필요해요.</p><input id="rename-field" maxlength="10" placeholder="새 이름"><button class="secondary" data-action="rename">이름 바꾸기</button></div><div class="setting-box danger"><h2>처음부터</h2><p>함께한 기록이 모두 사라집니다.</p><button class="danger-btn" data-action="reset">처음부터 시작하기</button></div></section></template>
+  <nav id="tabs" class="tabs" hidden><button data-tab="home">⌂<span>키우기</span></button><button data-tab="record">▣<span>기록</span></button><button data-tab="settings">⚙<span>설정</span></button></nav>
+  <script src="app.js"></script>
+</body></html>
