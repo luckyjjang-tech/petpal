@@ -37,20 +37,23 @@
     { at: 70, dog: '성견',     cat: '성묘' }
   ];
 
-  /* ── 품종 ─────────────────────────────────────────────────
-     height = 무대 높이에 대한 아이의 키 비율 (단계별)
-     사진은 assets/pets/<세트>_<자세>.webp  (자세: stand sit walk sad)  */
+  /* ── 품종 ──────────────────────────────────────────────────
+     사진은 assets/pets/<세트>_<자세>.webp  (자세: stand sit walk sad)
+     widths = 무대 너비에 대한 아이의 가로 비율 (단계별)
+     aspects = 사진의 가로/세로 비율 (그 비율로 높이가 정해진다)  */
   var BREEDS = [
     {
       id: 'golden', kind: 'dog', name: '골든리트리버', tag: '대형견', ready: true,
       sets: ['golden_s1', 'golden_s2', 'golden_s3'],
-      heights: [0.44, 0.68, 0.95],
+      widths: [0.66, 0.82, 0.96],
+      aspects: [840 / 575, 840 / 605, 840 / 670],
       blurb: '사람을 좋아하고 잘 먹는 아이'
     },
     {
       id: 'ksh', kind: 'cat', name: '코리안 숏헤어', tag: '중형묘 · 치즈', ready: true,
       sets: ['ksh_s1', 'ksh_s2', 'ksh_s3'],
-      heights: [0.36, 0.47, 0.62],
+      widths: [0.52, 0.62, 0.72],
+      aspects: [840 / 527, 840 / 555, 840 / 558],
       blurb: '집사 곁에 조용히 와 앉는 아이'
     },
     { id: 'poodle', kind: 'dog', name: '푸들', tag: '소형견', ready: false, blurb: '곱슬곱슬 잘 노는 아이' },
@@ -236,12 +239,16 @@
 
   function layoutPet() {
     if (!st) return;
-    var i = stageIndex(st.growth);
+    var i = Math.min(stageIndex(st.growth), 2);
     var b = breedOf(st.breed);
-    var stageH = $('stage').clientHeight || 360;
-    var h = Math.round(stageH * b.heights[Math.min(i, 2)] * growthScale());
+    var stageEl = $('stage');
+    var stageH = stageEl.clientHeight || 360;
+    var stageW = stageEl.clientWidth || 380;
+    var h = (stageW * b.widths[i] * growthScale()) / b.aspects[i];
+    h = Math.min(h, stageH * 0.92);
+    h = Math.round(h);
     $('petBox').style.setProperty('--petH', h + 'px');
-    $('petShadow').style.setProperty('--shadowW', Math.round(h * (b.kind === 'cat' ? 0.72 : 0.66)) + 'px');
+    $('petShadow').style.setProperty('--shadowW', Math.round(h * (b.kind === 'cat' ? 1.05 : 0.95)) + 'px');
   }
 
   function showPhoto(pose, fadeMs) {
