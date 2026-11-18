@@ -20,7 +20,6 @@
     mealsPerDay: 3,        //   하루 세 끼를 다 먹였을 때의 성장량
     callsToLearn: 10,      //   이름을 알아듣기까지 부르는 횟수 (10~20 사이에서 조절)
     maxBreeds: 2,          // ② 실제로 분양되는 품종 수 (2 = 강아지 1 · 고양이 1)
-    onePetPerDevice: true, // ③ 한 브라우저에 한 마리
     talk: { enabled: false } // ⑤ 켜는 방법은 talk.js와 README 참고
   };
 
@@ -84,6 +83,9 @@
     var c = t.charCodeAt(t.length - 1);
     if (c >= 0xAC00 && c <= 0xD7A3) return (c - 0xAC00) % 28 !== 0;
     return false;
+  }
+  function validName(v) {
+    return /^[가-힣a-zA-Z]{2,8}$/.test(String(v || '').trim());
   }
   function breedOf(id) {
     for (var i = 0; i < BREEDS.length; i++) if (BREEDS[i].id === id) return BREEDS[i];
@@ -714,6 +716,7 @@
   }
 
   function startAs(name) {
+    if (!validName(name)) return;
     st = freshState(pendingBreed.id);
     st.name = name;
     save();
@@ -768,7 +771,7 @@
 
     var inp = $('nameInput');
     inp.addEventListener('input', function () {
-      $('nameOk').disabled = inp.value.trim().length === 0;
+      $('nameOk').disabled = !validName(inp.value);
     });
     inp.addEventListener('keydown', function (e) {
       if (e.key === 'Enter' && inp.value.trim()) { e.preventDefault(); startAs(inp.value.trim()); }
